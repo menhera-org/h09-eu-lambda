@@ -5,9 +5,10 @@ exports.parse_query = query_string => {
 	const pairs = query_string.split ('&');
 	const values = {};
 	for (let pair of pairs) {
+		if ('' == pair) continue;
 		const parts = pair.split ('=');
-		const key = pair[0];
-		const value = pair.slice (1).join ('=');
+		const key = parts[0];
+		const value = parts.slice (1).join ('=');
 		if (!values[key]) {
 			values[key] = [];
 		}
