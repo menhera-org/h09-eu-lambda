@@ -15,7 +15,7 @@ exports.handler = async (event, context, callback) => {
     const matches = host.match (/^([^.]+)\.h09\.eu$/);
     const name = '' + ((matches || [])[1] || '');
     
-    const csp = "sandbox allow-forms; default-src 'none'; base-uri 'none'; form-action https://*.h09.eu; frame-ancestors 'none'; upgrade-insecure-requests";
+    const csp = "sandbox allow-forms; default-src 'none'; base-uri 'none'; form-action https://h09.eu https://*.h09.eu; frame-ancestors 'none'; upgrade-insecure-requests";
     const content_type = 'text/html';
     
     const post_params = parse_query (Buffer.from (request.body.data, 'base64').toString ());
