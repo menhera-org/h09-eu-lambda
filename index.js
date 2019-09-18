@@ -18,6 +18,7 @@ exports.handler = async (event, context, callback) => {
     const csp = "sandbox; default-src 'none'; base-uri 'none'; form-action https://*.h09.eu; frame-ancestors 'none'; upgrade-insecure-requests";
     const content_type = 'text/html';
     
+    const post_params = parse_query (Buffer.from (request.body.data, 'base64').toString ());
     const query_params = parse_query (request.querystring);
     
     const body = html `<!doctype html>
@@ -32,7 +33,16 @@ exports.handler = async (event, context, callback) => {
 <p>QUERY_STRING: ${query_string}</p>
 <p>REMOTE_ADDR: ${client_ip}</p>
 <pre>${JSON.stringify (query_params, null, 4)}</pre>
-<pre>${json}</pre>`;
+<pre>${JSON.stringify (post_params, null, 4)}</pre>
+<pre>${json}</pre>
+<form method='GET' action='/'>
+<label>text: <input type='text' name='text'/></label>
+<button>Submit (GET)</button>
+</form>
+<form method='POST' action='/'>
+<label>text: <input type='text' name='text'/></label>
+<button>Submit (POST)</button>
+</form>`;
     
     const response = {
         status: '503',
